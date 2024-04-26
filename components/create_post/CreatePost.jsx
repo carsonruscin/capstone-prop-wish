@@ -1,6 +1,14 @@
 import { Box, Typography } from "@mui/material"
 import { TextField } from "@mui/material";
-import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio } from "@mui/material"
+import { 
+    FormControl, 
+    FormControlLabel, 
+    FormLabel, 
+    RadioGroup, 
+    Radio,
+    Button,
+    Stack
+} from "@mui/material"
 
 export const CreatePost = () => {
   return (
@@ -8,12 +16,13 @@ export const CreatePost = () => {
       height={700}
       width={1000}
       my={4}
+      mx={4}
       display="flex"
       justifyContent='space-around'
       alignItems='flex-end'
-      gap={4}
+      gap={0}
       p={2}
-      sx={{ border: "2px solid #2979ff", borderRadius: '5px' }}
+      sx={{ border: "2px solid #FAFAFA", borderRadius: '5px', boxShadow: '0px 1px 2px 1px rgba(0,0,0,0.5)' }}
     >
         <Box 
            component='form'
@@ -32,7 +41,6 @@ export const CreatePost = () => {
                 rows={4}
                 defaultValue=''
             ></TextField>
-
             <FormControl>
             <FormLabel id="demo-radio-buttons-group-label">Select Prop Size</FormLabel>
             <RadioGroup
@@ -60,6 +68,7 @@ export const CreatePost = () => {
             </RadioGroup>
             </FormControl>
         </Box>
+        <Button variant="contained">Save</Button>
     </Box>
   );
 };

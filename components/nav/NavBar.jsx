@@ -47,7 +47,7 @@ export const NavBar = () => {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', boxShadow: '0px 1px 2px 1px rgba(0,0,0,0.5)' }}>
       <Tabs
         value={value}
         onChange={handleChange}
