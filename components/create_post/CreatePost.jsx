@@ -18,33 +18,18 @@ export const CreatePost = () => {
       my={4}
       mx={4}
       display="flex"
-      justifyContent='space-around'
+      flexWrap='wrap'
+      flexDirection='row'
+      justifyContent='center'
       alignItems='flex-end'
-      gap={0}
+      gap={3}
       p={2}
       sx={{ border: "2px solid #FAFAFA", borderRadius: '5px', boxShadow: '0px 1px 2px 1px rgba(0,0,0,0.5)' }}
-    >
-        <Box 
-           component='form'
-           sx={{
-            '& .MuiTextField-root': { m: 1, width: '75ch'},
-           }}
-           noValidate
-           autoComplete="off"
-        >
-            <TextField id="outlined-basic" label="Name" variant="outlined" />
-
-            <TextField
-                id='outlined-multiline-static'
-                label='Description'
-                multiline
-                rows={4}
-                defaultValue=''
-            ></TextField>
+    >   <Box order='2'>
             <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Select Prop Size</FormLabel>
+            <FormLabel id="radio-buttons-group" sx={{fontWeight: 'bold', color: '#2979ff', fontSize: '18px'}}>Prop Size</FormLabel>
             <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
+                aria-labelledby="radio-buttons-group"
                 defaultValue="Select Prop Size"
                 name="radio-buttons-group"
             >
@@ -56,9 +41,9 @@ export const CreatePost = () => {
             </FormControl>
 
             <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Select Battery Size</FormLabel>
+            <FormLabel id="radio-buttons-group" sx={{fontWeight: 'bold', color: '#2979ff', fontSize: '18px'}}>Battery Size</FormLabel>
             <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
+                aria-labelledby="radio-buttons-group"
                 defaultValue="Select Battery Size"
                 name="radio-buttons-group"
             >
@@ -68,7 +53,28 @@ export const CreatePost = () => {
             </RadioGroup>
             </FormControl>
         </Box>
-        <Button variant="contained">Save</Button>
+        
+        <Box 
+            flexBasis='55%'
+            order='1'
+           component='form'
+           sx={{
+            '& .MuiTextField-root': { m: 1, width: '62ch'},
+           }}
+           noValidate
+           autoComplete="off"
+        >
+            <TextField id="outlined-basic" label="Name" variant="outlined" />
+            <TextField
+                id='outlined-multiline-static'
+                label='Description'
+                multiline
+                rows={4}
+            ></TextField>
+        </Box>
+        <Box order='3' mx={3} my={1}>
+        <Button variant="contained">Save Post</Button>
+        </Box>
     </Box>
   );
 };
