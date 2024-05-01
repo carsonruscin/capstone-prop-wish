@@ -9,45 +9,45 @@ import {
   } from "@mui/material";
   import { Box, Typography } from "@mui/material";
   import { useState, useEffect } from "react";
-  import { getAllPosts } from "../../services/AllPostsService.jsx";
+  import { getFavorites } from "../../services/FavoritesService.jsx";
   
   export const FavCards = () => {
-    const [allCards, setAllCards] = useState([]);
+    const [favoriteCards, setFavoriteCards] = useState([]);
   
     useEffect(() => {
-      getAllPosts().then((postsArray) => {
-        setAllCards(postsArray);
+      getFavorites().then((favoritesArray) => {
+        setFavoriteCards(favoritesArray);
       });
     }, []);
   
-    return allCards.map((postObj) => (
+    return favoriteCards.map((favObj) => (
       <Card
+        key={favObj.id}
         sx={{
           maxWidth: 400,
           flexGrow:'1',
           flexShrink: '0',
           flexBasis: '20%',
         }}
-        key={postObj.id}
       >
         <CardMedia
           sx={{ height: 150 }}
-          image={postObj.img}
-          title={postObj.aircraftName}
+          image={favObj.post.imgUrl}
+          title={favObj.post.aircraftName}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {postObj.aircraftName}
+            {favObj.post.aircraftName}
           </Typography>
           <Typography variant="body1">
-              @Username
+            {favObj.user.userName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {postObj.description}
+            {favObj.post.description}
           </Typography>
           <Stack direction="row" spacing={2}>
-              <Chip label='Prop Size' color="primary" />
-              <Chip label='Battery Size' color="secondary" />
+              <Chip label={favObj.post.propSizeOptionId} color="primary" />
+              <Chip label={favObj.post.batterySizeOptionId} color="secondary" />
           </Stack>
         </CardContent>
         <CardActions>

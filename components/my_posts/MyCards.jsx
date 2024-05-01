@@ -33,7 +33,7 @@ export const MyCards = () => {
     >
       <CardMedia
         sx={{ height: 140 }}
-        image={postObj.img}
+        image={postObj.imgUrl}
         title={postObj.aircraftName}
       />
       <CardContent>

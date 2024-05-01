@@ -1,10 +1,10 @@
 import { Box, Container, Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { Routes, Route, Outlet} from "react-router-dom"
-import { NewPostPage } from '../components/new_post/NewPostPage.jsx'
-import { AllPosts } from '../components/all_posts/AllPosts.jsx'
 import { NavBar } from '../components/nav/NavBar.jsx'
-import { MyFavorites } from '../components/favorites/MyFavorites.jsx'
+import { Login } from '../components/auth/Login.jsx'
+import { Authorized } from "/views/Authorized.jsx"
+import { ApplicationViews } from '../components/views/ApplicationViews.jsx'
 
 export const App = () => {
   return (
@@ -18,12 +18,13 @@ export const App = () => {
         alignItems='center'
       >
         <Routes>
-          <Route path="/">
-            <Route index element={<Outlet />} />
-            <Route path="all_posts" element={<AllPosts />} />
-            <Route path="favorites" element={<MyFavorites />} />
-            <Route path="new_post" element={<NewPostPage />} />
-          </Route>
+          <Route path='/login' element={<Login />}/>
+
+          <Route path='*' element={
+            <Authorized>
+              <ApplicationViews />
+            </Authorized>
+          }/>
         </Routes>
       </Box>
     </Container>

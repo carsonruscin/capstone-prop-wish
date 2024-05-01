@@ -39,15 +39,15 @@ export const NavBar = () => {
 
   const handleChange = (event, newValue) => {
     if (
-      event.type !== 'click' ||
-      (event.type === 'click' && samePageLinkNavigation(event))
+      event.type !== "click" ||
+      (event.type === "click" && samePageLinkNavigation(event))
     ) {
       setValue(newValue);
     }
   };
 
   return (
-    <Box sx={{ width: '100%', boxShadow: '0px 1px 2px 1px rgba(0,0,0,0.5)' }}>
+    <Box sx={{ width: "100%", boxShadow: "0px 1px 2px 1px rgba(0,0,0,0.5)" }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -58,6 +58,31 @@ export const NavBar = () => {
         <LinkTab label="All Posts" href="/all_posts" />
         <LinkTab label="My Favorites" href="/favorites" />
         <LinkTab label="New Post" href="/new_post" />
+        <Box
+          display='flex'
+          alignItems='center'
+          mx={3}
+          sx={{
+            typography: "body1",
+            "& > :not(style) ~ :not(style)": {
+              ml: 2,
+            },
+          }}
+        >
+          {localStorage.getItem("propwish_user") ? (
+            <Link
+              href="#"
+              onClick={() => {
+                localStorage.removeItem("propwish_user");
+                navigate("/", { replace: true });
+              }}
+            >
+              Logout
+            </Link>
+          ) : (
+            ""
+          )}
+        </Box>
       </Tabs>
     </Box>
   );
