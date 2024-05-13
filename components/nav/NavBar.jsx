@@ -1,9 +1,12 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const samePageLinkNavigation = (event) => {
   if (
@@ -35,7 +38,7 @@ LinkTab.propTypes = {
 };
 
 export const NavBar = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     if (
@@ -47,7 +50,15 @@ export const NavBar = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", boxShadow: "0px 1px 2px 1px rgba(0,0,0,0.5)" }}>
+    <Box
+      display="flex"
+      justifyContent="center"
+      flexWrap="wrap"
+      sx={{
+        width: "100%",
+        boxShadow: "0px 1px 2px 1px rgba(0,0,0,0.5)",
+      }}
+    >
       <Tabs
         value={value}
         onChange={handleChange}
@@ -55,35 +66,27 @@ export const NavBar = () => {
         role="navigation"
         centered
       >
-        <LinkTab label="All Posts" href="/all_posts" />
-        <LinkTab label="My Favorites" href="/favorites" />
-        <LinkTab label="New Post" href="/new_post" />
-        <Box
-          display='flex'
-          alignItems='center'
-          mx={3}
-          sx={{
-            typography: "body1",
-            "& > :not(style) ~ :not(style)": {
-              ml: 2,
-            },
-          }}
-        >
-          {localStorage.getItem("propwish_user") ? (
-            <Link
-              href="#"
-              onClick={() => {
-                localStorage.removeItem("propwish_user");
-                navigate("/", { replace: true });
-              }}
-            >
-              Logout
-            </Link>
-          ) : (
-            ""
-          )}
-        </Box>
+        <LinkTab label="All Posts" to="/all_posts" />
+        <LinkTab label="My Favorites" to="/favorites" />
+        <LinkTab label="New Post" to="/new_post" />
       </Tabs>
+      <Box display="flex" alignItems="center" mx={3}>
+        {localStorage.getItem("propwish_user") ? (
+          <Button
+            href="#"
+            variant="contained"
+            startIcon={<LogoutIcon />}
+            onClick={() => {
+              localStorage.removeItem("propwish_user");
+              Navigate("/", { replace: true });
+            }}
+          >
+            Logout
+          </Button>
+        ) : (
+          ""
+        )}
+      </Box>
     </Box>
   );
-}
+};

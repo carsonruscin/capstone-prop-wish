@@ -8,6 +8,8 @@ import {
     Stack,
   } from "@mui/material";
   import { Box, Typography } from "@mui/material";
+  import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+  import RotateLeftIcon from '@mui/icons-material/RotateLeft';
   import { useState, useEffect } from "react";
   import { getFavorites } from "../../services/FavoritesService.jsx";
   
@@ -33,11 +35,11 @@ import {
         <CardMedia
           sx={{ height: 150 }}
           image={favObj.post.imgUrl}
-          title={favObj.post.aircraftName}
+          title={favObj.post.droneName}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {favObj.post.aircraftName}
+            {favObj.post.droneName}
           </Typography>
           <Typography variant="body1">
             {favObj.user.userName}
@@ -45,10 +47,6 @@ import {
           <Typography variant="body2" color="text.secondary">
             {favObj.post.description}
           </Typography>
-          <Stack direction="row" spacing={2}>
-              <Chip label={favObj.post.propSizeOptionId} color="primary" />
-              <Chip label={favObj.post.batterySizeOptionId} color="secondary" />
-          </Stack>
         </CardContent>
         <CardActions>
           <Button size="medium">Remove from Favorites</Button>

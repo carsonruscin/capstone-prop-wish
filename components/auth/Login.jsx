@@ -1,64 +1,69 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
-import { getUserByUsername } from "../../services/UserService.jsx"
+import { Box, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import LoginIcon from "@mui/icons-material/Login";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getUserByUsername } from "../../services/UserService.jsx";
 
 export const Login = () => {
-  const [username, setUsername] = useState("@RotorRiot53")
-  const navigate = useNavigate()
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = () => {
+    const username = window.prompt("Please enter your username");
 
-    getUserByUsername(username).then((foundUsers) => {
-      if (foundUsers.length === 1) {
-        const user = foundUsers[0]
-        localStorage.setItem(
-          "propwish_user",
-          JSON.stringify({
-            id: user.id,
-            userName: user.userName,
-          })
-        )
-
-        navigate("/")
-      } else {
-        window.alert("Invalid login")
-      }
-    })
-  }
+    if (username) {
+      getUserByUsername(username).then((foundUsers) => {
+        if (foundUsers.length === 1) {
+          const user = foundUsers[0];
+          localStorage.setItem(
+            "propwish_user",
+            JSON.stringify({
+              id: user.id,
+              userName: user.userName,
+            })
+          );
+          navigate("/all_posts");
+        } else {
+          window.alert("Invalid login");
+        }
+      });
+    } else {
+      window.alert("Username cannot be empty");
+    }
+  };
 
   return (
-    <main className="container-login">
-      <section>
-        <form className="form-login" onSubmit={handleLogin}>
-          <h1>Prop Wish</h1>
-          <h2>Please sign in</h2>
-          <fieldset>
-            <div className="form-group">
-              <input
-                type="username"
-                value={username}
-                onChange={(evt) => set(evt.target.value)}
-                className="form-control"
-                placeholder="Username"
-                required
-                autoFocus
-              />
-            </div>
-          </fieldset>
-          <fieldset>
-            <div className="form-group">
-              <button className="login-btn btn-info" type="submit">
-                Sign in
-              </button>
-            </div>
-          </fieldset>
-        </form>
-      </section>
-      <section>
-        <Link to="/register">Not a member yet?</Link>
-      </section>
-    </main>
-  )
-}
+    <Box
+      sx={{
+        backgroundImage: `url('src/assets/images/pexels-drone-in-field.jpg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        minWidth: "100vw",
+      }}
+    >
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        alignItems="center"
+        gap={75}
+        my={25}
+      >
+        <Typography variant="h1" fontFamily="Permanent Marker" color="white">
+          Prop Wish
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<LoginIcon />}
+          onClick={handleLogin}
+          color="info"
+          sx={{ minWidth: "150px" }}
+        >
+          Login
+        </Button>
+      </Box>
+    </Box>
+  );
+};

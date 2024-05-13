@@ -6,7 +6,7 @@ export const MyFavorites = () => {
     <Box
       height={1000}
       width={2000}
-      my={4}
+      my={12}
       display="flex"
       flexWrap="wrap"
       flexDirection="row"

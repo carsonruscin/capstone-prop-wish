@@ -14,7 +14,7 @@ export const addToFavorites = (userId, postId) => {
     const data = {
         userId: userIdObj.id,
         postId: postId,
-    };
+    }
 
     console.log('Data before stringify:', data);
 
@@ -31,6 +31,7 @@ export const addToFavorites = (userId, postId) => {
         throw error; // Rethrow the error for handling in the calling function if needed
     });
 };
+
 
 
 

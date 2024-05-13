@@ -1,9 +1,7 @@
-import { getMyPosts } from "../../services/MyPostsService.jsx";
 import { MyCards } from "./MyCards.jsx";
-import { Box, Typography } from "@mui/material"
-import { Card, CardActions, CardContent, CardMedia, Button, } from "@mui/material"
+import { Box } from "@mui/material";
 
-export const MyPosts = () => {
+export const MyPosts = ({ allPosts, handleEdit, handleDelete }) => {
   return (
     <Box
       height={700}
@@ -11,21 +9,24 @@ export const MyPosts = () => {
       my={4}
       mx={4}
       display="flex"
-      flexWrap='wrap'
-      flexDirection='row'
-      justifyContent='space-around'
+      flexWrap="wrap"
+      flexDirection="row"
+      justifyContent="space-around"
       gap={5}
       p={2}
-      sx={{ 
-        border: "2px solid #FAFAFA", 
-        borderRadius: '5px',
-        boxShadow: '0px 1px 2px 1px rgba(0,0,0,0.5)',
-        overflow: 'hidden',
-        overflowY: 'scroll'
+      sx={{
+        border: "2px solid #FAFAFA",
+        borderRadius: "5px",
+        boxShadow: "0px 1px 2px 1px rgba(0,0,0,0.5)",
+        overflow: "hidden",
+        overflowY: "scroll",
       }}
     >
-      <MyCards />
+      <MyCards
+        allPosts={allPosts}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
     </Box>
   );
 };
-

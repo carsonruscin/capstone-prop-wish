@@ -7,53 +7,73 @@ import {
   Chip,
   Stack,
 } from "@mui/material";
-import { Box, Typography } from "@mui/material";
+import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
-import { getAllPosts } from "../../services/AllPostsService.jsx";
 
-export const MyCards = () => {
-  const [allCards, setAllCards] = useState([]);
+export const MyCards = ({ allPosts, handleEdit, handleDelete }) => {
+  const [filteredCards, setFilteredCards] = useState([]);
 
+  const userId = localStorage.getItem("propwish_user");
+  const parsedUser = JSON.parse(userId);
+  const loggedInUserId = parsedUser.id;
+  const loggedInUsername = parsedUser.userName;
+
+  // useEffect for filtering posts by userId to display only logged in users posts
   useEffect(() => {
-    getAllPosts().then((postsArray) => {
-      setAllCards(postsArray);
-    });
-  }, []);
+    const filtered = allPosts.filter((card) => card.userId === loggedInUserId);
+    setFilteredCards(filtered);
+  }, [allPosts, loggedInUserId]);
 
-  return allCards.map((postObj) => (
+  return filteredCards.map((postObj) => (
     <Card
-      sx={{
-        maxWidth: 300,
-        flexGrow:'1',
-        flexShrink: '0',
-        flexBasis: '30%',
-        flexWrap: 'wrap',
-      }}
       key={postObj.id}
+      sx={{
+        maxHeight: 375,
+        maxWidth: 300,
+        flexGrow: "0",
+        flexShrink: "0",
+        flexBasis: "33%",
+        flexWrap: "wrap",
+      }}
     >
       <CardMedia
         sx={{ height: 140 }}
         image={postObj.imgUrl}
-        title={postObj.aircraftName}
+        title={postObj.droneName}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {postObj.aircraftName}
+          {postObj.droneName}
         </Typography>
-        <Typography variant="body1">
-            @Username
+        <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+          {loggedInUsername}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {postObj.description}
         </Typography>
-        <Stack direction="row" spacing={2}>
-            <Chip label='Prop Size' color="primary" />
-            <Chip label='Battery Size' color="secondary" />
+        <Stack direction="row" spacing={1}>
+          <Chip
+            icon={<BatteryChargingFullIcon />}
+            color="success"
+            label={`Battery: ${postObj.batterySizeOption}`}
+          />
+
+          <Chip
+            icon={<RotateLeftIcon />}
+            color="info"
+            label={`Prop: ${postObj.propSizeOption}`}
+          />
         </Stack>
       </CardContent>
       <CardActions>
-        <Button size="medium">Edit</Button>
-        <Button size="medium">Delete</Button>
+        <Button size="medium" onClick={() => handleEdit(postObj)}>
+          Edit
+        </Button>
+        <Button size="medium" onClick={() => handleDelete(postObj.id)}>
+          Delete
+        </Button>
       </CardActions>
     </Card>
   ));
