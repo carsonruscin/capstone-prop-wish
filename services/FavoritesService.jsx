@@ -1,6 +1,18 @@
-export const getFavorites = () => {
-    return fetch("http://localhost:8088/favoritedPosts?_expand=user&_expand=post").then((res) => res.json())
-}
+export const getFavorites = (loggedInUserId) => {
+    return fetch(`http://localhost:8088/favoritedPosts?_expand=user&_expand=post&userId=${loggedInUserId}`)
+        .then(res => res.json());
+};
+
+export const getPostById = async (postId) => {
+    try {
+      const response = await fetch(`http://localhost:8088/posts/${postId}`);
+      const postData = await response.json();
+      return postData;
+    } catch (error) {
+      console.error('Error fetching post data:', error);
+      return null;
+    }
+  };
 
 export const addToFavorites = (userId, postId) => {
     
@@ -23,14 +35,25 @@ export const addToFavorites = (userId, postId) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data), // Stringify the data object
+        body: JSON.stringify(data),
     })
     .then((response) => response.json())
     .catch((error) => {
         console.error('Error adding post to favorites:', error);
-        throw error; // Rethrow the error for handling in the calling function if needed
+        throw error;
     });
 };
+
+export const removeFromFavorites = async (post) => {
+    const deleteOptions = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }
+
+    await fetch(`http://localhost:8088/favoritedPosts/${post}`, deleteOptions)
+}
 
 
 
