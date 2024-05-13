@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { Box } from "@mui/material"
 import { TextField } from "@mui/material";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { 
     FormControl, 
     FormControlLabel, 
@@ -8,7 +9,8 @@ import {
     RadioGroup, 
     Radio,
     Button,
-    Stack
+    Stack,
+    Typography
 } from "@mui/material"
 
 export const CreatePost = ({ addedNewPost, initialPost, handleClearEdit, onPostSubmit }) => {
@@ -129,6 +131,38 @@ export const CreatePost = ({ addedNewPost, initialPost, handleClearEdit, onPostS
         boxShadow: "0px 1px 2px 1px rgba(0,0,0,0.5)",
       }}
     >
+      <Box
+        order="0"
+        width="620px"
+        height="350px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        border="1px solid #ccc"
+        borderRadius="4px"
+        overflow="hidden"
+        mt={2}
+        mb={0}
+      >
+        {formValues?.imgUrl ? (
+          <img
+            src={formValues.imgUrl}
+            alt="Drone Preview"
+            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", margin: "0", padding: "0" }}
+          />
+        ) : (
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            color="#888"
+          >
+            <AddPhotoAlternateIcon style={{ fontSize: 64, marginBottom: "8px" }} />
+            <Typography variant="body1" sx={{opacity: 0.5}}>Add an Image URL</Typography>
+          </Box>
+        )}
+      </Box>
       <Box order="2">
         <FormControl>
           <FormLabel
