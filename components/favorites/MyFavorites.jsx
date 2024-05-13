@@ -1,7 +1,14 @@
+import { useState } from "react";
 import { Box } from "@mui/material";
 import { FavCards } from "./FavCards.jsx";
 
 export const MyFavorites = () => {
+  const [favoriteCards, setFavoriteCards] = useState([]);
+
+  const handleFavoritesUpdate = (updatedFavoriteCards) => {
+    setFavoriteCards(updatedFavoriteCards);
+  };
+
   return (
     <Box
       height={1000}
@@ -22,7 +29,7 @@ export const MyFavorites = () => {
         overflowY: "scroll",
       }}
     >
-      <FavCards />
+      <FavCards favoriteCards={favoriteCards} handleFavoritesUpdate={handleFavoritesUpdate} />
     </Box>
   );
 };

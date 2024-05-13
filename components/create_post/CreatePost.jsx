@@ -11,7 +11,7 @@ import {
     Stack
 } from "@mui/material"
 
-export const CreatePost = ({ addedNewPost, initialPost, handleClearEdit }) => {
+export const CreatePost = ({ addedNewPost, initialPost, handleClearEdit, onPostSubmit }) => {
   const [formValues, setFormValues] = useState(initialPost || {})
   const [selectedPropId, setSelectedPropId] = useState(initialPost?.propSizeOptionsId || null)
   const [selectedBattId, setSelectedBattId] = useState(initialPost?.batterySizeOptionsId || null)
@@ -48,6 +48,7 @@ export const CreatePost = ({ addedNewPost, initialPost, handleClearEdit }) => {
         });
         if (response.ok) {
           handleClearEdit() // Clear edit mode after successful update
+          onPostSubmit() // Call the onPostSubmit function to trigger a re-render of MyPosts
           console.log("Post updated successfully!")
         } else {
           console.error("Failed to update post:", response.statusText)
@@ -66,6 +67,7 @@ export const CreatePost = ({ addedNewPost, initialPost, handleClearEdit }) => {
           setSelectedPropId(null)
           setSelectedBattId(null)
           addedNewPost(postData)
+          onPostSubmit() // call the onPostSubmit function to trigger a re-render of MyPosts
           console.log("Post submitted successfully!")
         } else {
           console.error("Failed to submit post:", response.statusText)

@@ -6,15 +6,13 @@ import {
   Button,
 } from "@mui/material";
 import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getFavorites } from "../../services/FavoritesService.jsx";
 import { getPostById } from "../../services/FavoritesService.jsx";
 import { getUserById } from "../../services/UserService.jsx";
 import { removeFromFavorites } from "../../services/FavoritesService.jsx";
 
-export const FavCards = () => {
-  const [favoriteCards, setFavoriteCards] = useState([]);
-
+export const FavCards = ({ favoriteCards, handleFavoritesUpdate }) => {
   const userId = localStorage.getItem("propwish_user");
   const parsedUser = JSON.parse(userId);
   const loggedInUserId = parsedUser.id;
@@ -29,13 +27,18 @@ export const FavCards = () => {
         })
       );
 
-      setFavoriteCards(favoritesWithUserData);
+      handleFavoritesUpdate(favoritesWithUserData);
     });
-  }, [loggedInUserId]);
+  }, [loggedInUserId, handleFavoritesUpdate]);
 
-  const handleRemoveFromFavorites = (post) => {
-    removeFromFavorites(post);
-    console.log(post);
+  const handleRemoveFromFavorites = async (favObj) => {
+    const removedFavId = await removeFromFavorites(favObj.id);
+    if (removedFavId) {
+      const updatedFavoriteCards = favoriteCards.filter(
+        (card) => card.id !== removedFavId
+      );
+      onFavoritesUpdate(updatedFavoriteCards);
+    }
   };
 
   return favoriteCards.map((favObj) => (
@@ -63,7 +66,7 @@ export const FavCards = () => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="medium" onClick={() => handleRemoveFromFavorites(favObj.id)}>Remove from Favorites</Button>
+        <Button size="medium" onClick={() => handleRemoveFromFavorites(favObj)}>Remove from Favorites</Button>
       </CardActions>
     </Card>
   ));

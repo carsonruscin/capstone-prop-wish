@@ -29,12 +29,10 @@ export const AllCards = ({ allPosts }) => {
 
     getPropSizeOptions().then((options) => {
       setPropSizeOptions(options);
-      console.log("Prop Size Options:", options);
     });
 
     getBatterySizeOptions().then((options) => {
       setBatterySizeOptions(options);
-      console.log("Battery Size Options:", options);
     });
   }, []);
 

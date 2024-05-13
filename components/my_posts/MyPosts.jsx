@@ -2,6 +2,7 @@ import { MyCards } from "./MyCards.jsx";
 import { Box } from "@mui/material";
 
 export const MyPosts = ({ allPosts, handleEdit, handleDelete }) => {
+
   return (
     <Box
       height={700}

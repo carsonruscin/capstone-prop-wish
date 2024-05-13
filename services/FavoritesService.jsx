@@ -28,8 +28,6 @@ export const addToFavorites = (userId, postId) => {
         postId: postId,
     }
 
-    console.log('Data before stringify:', data);
-
     return fetch("http://localhost:8088/favoritedPosts", {
         method: "POST",
         headers: {

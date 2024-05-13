@@ -10,6 +10,11 @@ import { deletePost } from "../../services/AllPostsService.jsx";
 export const NewPostPage = () => {
   const [allPosts, setAllPosts] = useState([]);
   const [editPost, setEditPost] = useState(null);
+  const [postCount, setPostCount] = useState(0)
+
+  const onPostSubmit = () => {
+    setPostCount(prevCount => prevCount + 1)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +47,7 @@ export const NewPostPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [postCount]);
 
   // Trigger state change and re-render when new post is added to all posts
   const addedNewPost = (newPost) => {
@@ -51,16 +56,19 @@ export const NewPostPage = () => {
 
   const handleEdit = (post) => {
     setEditPost(post);
-    console.log(post);
   };
 
   const handleClearEdit = () => {
     setEditPost(null);
   };
 
-  const handleDelete = (post) => {
-    deletePost(post);
-    console.log(post);
+  const handleDelete = async (postId) => {
+    try {
+      await deletePost(postId);
+      setAllPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
   return (
@@ -70,10 +78,14 @@ export const NewPostPage = () => {
           addNewPost={addedNewPost}
           initialPost={editPost}
           handleClearEdit={handleClearEdit}
+          onPostSubmit={onPostSubmit}
         />
       ) : (
         <>
-          <CreatePost addedNewPost={addedNewPost} />
+          <CreatePost 
+          addedNewPost={addedNewPost} 
+          onPostSubmit={onPostSubmit}
+          />
           <MyPosts
             allPosts={allPosts}
             handleEdit={handleEdit}

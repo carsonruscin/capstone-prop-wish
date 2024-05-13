@@ -4,8 +4,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const samePageLinkNavigation = (event) => {
@@ -39,6 +39,19 @@ LinkTab.propTypes = {
 
 export const NavBar = () => {
   const [value, setValue] = useState(0);
+
+  const location = useLocation()
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === '/all_posts') {
+      setValue(0);
+    } else if (path === '/favorites') {
+      setValue(1);
+    } else if (path === '/new_post') {
+      setValue(2);
+    }
+  }, [location]);
 
   const handleChange = (event, newValue) => {
     if (
@@ -78,7 +91,7 @@ export const NavBar = () => {
             startIcon={<LogoutIcon />}
             onClick={() => {
               localStorage.removeItem("propwish_user");
-              Navigate("/", { replace: true });
+              window.location.href = "/login"
             }}
           >
             Logout
